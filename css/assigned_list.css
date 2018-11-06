@@ -1,0 +1,43 @@
+.modal_btn {
+    float: right;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+}
+
+.modal_btn1{
+    float: right;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+}
+."btn btn-primary"{
+    float: right;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+}
+td.details-control {
+    text-align:center;
+    color:forestgreen;
+    cursor: pointer;
+}
+tr.shown td.details-control {
+    text-align:center;
+    color:red;
+}
+
+td.odd {
+    background: url('../img/plus_button.png') no-repeat center center;
+    background-color: #cccccc;
+    cursor: pointer;
+}

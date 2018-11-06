@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+{% load static %}
+<script src="{% static "handsontable/dist/handsontable.full.min.js" %}"></script>
+<link href="{% static "handsontable/dist/handsontable.full.min.css" %}"  rel="stylesheet" media="screen">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p> Hands on Table Example </p>
+<div id="example"></div>
+
+
+    <script>
+
+    var headerArr = [];
+    var line = [];
+    {% for item in tableHeader %}
+        headerArr.push('{{ item }}');
+        line.push('');
+    {% endfor %}
+    var table = [[]];
+/*
+    for(i = 0; i < {{ numLines }}; ++i){
+        table.push([ ]);
+        for(j = 0; j < {{ numHeaders }}; ++j){
+          table[i].push(' ');
+         }
+    }
+*/
+    var datahand = table,
+            container = document.getElementById('example'),
+            hot;
+
+          hot = new Handsontable(container, {
+            data: datahand,
+            contextMenu: true,
+            rowHeaders: true,
+            colHeaders: headerArr,
+            minRows: {{ numLines }},
+            minCols: {{ numHeaders }},
+            //TODO: Make sure users cannot delete columns
+            maxCols: {{ numHeaders }},
+            manualColumnResize: true,
+            manualRowResize: true,
+            columns: [
+             {% for name in tableHeader %}
+                {% if  name != "List Price" %}
+                {
+
+                     data: '{{ name }}',
+                     type: 'numeric'
+
+                },
+                {% else %}
+                     {
+
+                     data: '{{ name }}',
+                     type: 'text'
+
+                    }
+                {% endif %}
+             {% endfor %}
+            ]
+
+          });
+    </script>
+</body>
+</html>

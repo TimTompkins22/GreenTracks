@@ -1,0 +1,79 @@
+
+ .sourcing_tabs{
+    display: inline-block;
+    border-bottom: 30px solid gray;
+	border-left: 20px solid transparent;
+	border-right: 20px solid transparent;
+	height: 0;
+	width: 200px;
+	color: black;
+	text-align: center;
+	margin-left: 5px;
+	margin-right: 5px;
+	font-size: 14px;
+	cursor: default;
+
+
+
+ }
+
+ .current_sourcing_tab{
+    display: inline-block;
+    border-bottom: 30px solid white;
+	border-left: 20px solid transparent;
+	border-right: 20px solid transparent;
+	height: 0;
+	width: 200px;
+	color: black;
+	text-align: center;
+	margin-left: 5px;
+	margin-right: 5px;
+	font-size: 14px;
+    cursor: default;
+ }
+
+ .sourcing_tabs:hover{
+   display: inline-block;
+    border-bottom: 30px solid #D3D3D3;
+	border-left: 20px solid transparent;
+	border-right: 20px solid transparent;
+	height: 0;
+	width: 200px;
+	color: black;
+	text-align: center;
+	margin-left: 5px;
+	margin-right: 5px;
+	cursor: default;
+
+ }
+
+ .tab_label{
+    display: inline-block;
+    color: black;
+    height: 30px;
+ }
+
+.tabs_header{
+    color: white;
+    display: inline-block;
+
+}
+
+.Page_Titles{
+    color: white;
+    display: inline-block;
+    cursor: default;
+    height: 45px;
+}
+
+a.h2:hover{
+    text-decoration: none;
+}
+
+a.h5:hover{
+    color: #0056b3 !important;
+}
+
+.close{
+    margin-left: 5px;
+}

@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<script type="text/javascript" src="/static/js/jquery-3.3.1.js" xmlns="http://www.w3.org/1999/html"></script>
+<script type="text/javascript" src="/static/js/datatables.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+<script src="http://malsup.github.com/jquery.form.js"></script>
+
+
+<link href="handsontable/dist/handsontable.full.min.css"  rel="stylesheet" media="screen">
+
+<link rel="stylesheet" href="/static/css/bootstrap.min.css" >
+<link rel="stylesheet" href="/static/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="/static/css/assigned_list.css">
+<link rel="stylesheet" href="/static/css/tab_styles.css">
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+
+
+<style>
+  .vendorModal
+  {
+      width:300px;
+      height:300px;
+    }
+
+    .modal-body {
+         height: 100%;
+         height:200px;
+         width: 100%;
+         width: 300px;
+
+    }
+    .modal-dialog{
+        height:300px;
+        width: 300px;
+    }
+</style>
+<style>
+
+.vendorModal1
+  {
+      width:300px;
+      height:300px;
+    }
+
+    .modal-body1 {
+         height: 100%;
+         height:200px;
+         width: 100%;
+         width: 300px;
+
+    }
+    .modal-dialog1{
+        height:300px;
+        width: 300px;
+    }
+
+
+</style>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Assigned Requests</title>
+</head>
+<body>
+   <div class="bg-dark">
+        <div class="Page_Titles">
+            <a class="h2" href="#">GreenTracks</a>
+            <a class="h5" style="margin: 10px" onclick="saveAndChange(-1)">Home</a>
+        </div>
+        <div class="tabs_header">
+
+        </div>
+
+      </div>
+    </nav>
+
+    <h1>Profile Select
+
+    <form  method="post">
+           {% csrf_token %}
+    <button data-toggle="modal" class="modal_btn" type = "submit" data-target="#vendorModal" id ="signout" name="signout" value=1 href= "/login">
+                Log Out
+            </button>
+    </form> <form  method="post">
+           {% csrf_token %}
+    <button data-toggle="modal" class="modal_btn1" type = "submit" data-target="#vendorModal1" id ="newReq" name="newReq" value=1 href= "/new_donation">
+                Add New Donation
+            </button>
+    </form>
+    <a class="btn btn-primary" style="float: right;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px; " href="/settings/"> Settings</a></h1>
+  <script>
+
+$('#close').click(function() {
+   $('#vendorModal').modal('hide');
+   $('#vendorModal1').modal('hide');
+
+});
+</script>
+
+
+
+  Hi {{ current_user.user_name }}!
+
+     <td>{{ val.user_name }}</td>
+        <br>
+    <table id="example" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th align="left"></th>
+                <th align="left">Name</th>
+                <!-- <th align="left">Sourcing Type</th> -->
+                <th align="left"> Group </th>
+                <th align="left">Total Donations</th>
+                <th align="left">Last Donation</th>
+                <th align="left">Join Date</th>
+
+                <th align="left"></th>
+
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Address</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for key, val in listofusers.items %}
+
+                <tr>
+
+                    <td></td>
+                    <td>{{ val.user_name }}</td>
+                    <!-- <td>{{ item.source_type }}</td> -->
+                    <td>{{ val.group.group_name }}</td>
+                    <td> {{ val.first_name }} </td>
+                    <td>{{ val.last_name }}</td>
+                    <td>{{ val.join_date }}</td>
+                    <!--<td>{{ val.rfq_date }}</td>-->
+
+            <td><a class="btn btn-primary" href="/main_donation_screen/{{val.user_name}}">View</a></td>
+
+                      <!--  onclick="addTab({{val.user_name}})
+
+                    <!-- FIXME: This information might be null, if the vendor is null -->
+                    <td>{{ val.first_name }}</td>
+                    <td>{{ val.last_name }}</td>
+                    <td>{{ val.customer.address.street }}, {{val.customer.address.city}}, {{val.customer.address.zipcode}}, {{val.customer.address.country}}</td>
+
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+   <br>
+    <table id="example1" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th align="left"></th>
+                <th align="left">Group Number</th>
+                <!-- <th align="left">Sourcing Type</th> -->
+                <th align="left">Group Name</th>
+                <th align="left">Contact Name</th>
+                <th align="left">Join Date</th>
+                <th align="left"> Email</th>
+                <th align="left">Group Address</th>
+                <th align="left"> </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for key, val in groups.items %}
+
+                <tr>
+
+                    <td></td>
+                    <td>{{ val.group_id }}</td>
+                    <!-- <td>{{ item.source_type }}</td> -->
+                    <td>{{ val.group_name }}</td>
+                    <td>{{ val.contact.first_name }}  {{ val.contact.last_name }}</td>
+                    <td>{{ val.founded }}</td>
+                    <!--<td>{{ val.rfq_date }}</td>-->
+
+                    <!-- FIXME: This information might be null, if the vendor is null -->
+                    <td>{{ val.email }}</td>
+                    <td>{{ val.address.street }}, {{val.address.city}}, {{val.address.zipcode}}, {{val.address.country}}</td>
+                     <td><a class="btn btn-primary" href="/main_donation_screen/{{val.group_name}}">View</a></td>
+
+                </tr>
+
+            {% endfor %}
+        </tbody>
+    </table>
+<div class="modal fade" id="vendorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Sign in</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+   <div class="modal fade" id="vendorModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle1"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title1" id="exampleModalLongTitle1">Create New Donation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body1">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    //Modal Config
+    $('button.modal_btn').on('click', function(e) {
+        e.preventDefault();
+        var url = $(this).attr('href');
+        $(".modal-body").height="500px";
+        $(".modal-body").html('<iframe width="100%" height="100%" frameborder="0" scrolling="no" allowtransparency="true" src="'+url+'"></iframe>');
+    });
+    $('#vendorModal').modal('handleUpdate')
+</script>
+<script>
+    $('button.modal_btn1').on('click', function(e) {
+        e.preventDefault();
+        var url = $(this).attr('href');
+        $(".modal-body1").height="500px";
+        $(".modal-body1").html('<iframe width="100%" height="100%" frameborder="0" scrolling="no" allowtransparency="true" src="'+url+'"></iframe>');
+    });
+    $('#vendorModal1').modal('handleUpdate')
+
+</script>
+
+    <script>
+        function format ( d ) {
+        // `d` is the original data object for the row
+        return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+            '<tr>'+
+                '<td>Email:</td>'+
+                '<td>'+ d["Email"] +'</td>'+
+            '</tr>'+
+            '<tr>'+
+                '<td> Phone:</td>'+
+                '<td>'+ d["Vendor Phone"] +'</td>'+
+            '</tr>'+
+            '<tr>'+
+                '<td> Address:</td>'+
+                '<td>'+ d["Address"] +'</td>'+
+            '</tr>'+
+        '</table>';
+    }
+
+        $(document).ready(function() {
+            var table = $('#example').DataTable( {
+                <!--//FIXME: Try to get the + button to show data-->
+                <!--//"data": "{{ query_results|safe }}",-->
+                "order": [[ 5, "asc" ]],
+                "columns": [
+                {
+                    "className":      'details-control',
+                    "orderable":      false,
+                    "data":           null,
+                    "defaultContent": '',
+                    "render": function () {
+                         return '<i class="fa fa-plus-square" aria-hidden="true"></i>';
+                     },
+                     width:"15px"
+                },
+                {
+                    "data": "Name"
+                },
+                {
+                    "data": "Group"
+                },
+                {
+                    "data": "Total Donation"
+                },
+                {
+                    "data": "Last Donation",
+                    "type": "Join Date"
+                },
+                {
+                    "data": ""
+                },
+                {
+                    <!--"targets": -1,-->
+                    <!--"data": null,-->
+                    <!--"defaultContent":'<a class="btn btn-primary" href="/main_donation_screen/{{val.user_name}}">View</a>'-->
+                },
+                {
+                    "data": "First Name",
+                    "visible": false
+                },
+                {
+                    "data": "Last Name",
+                    "visible": false
+                },
+                {
+                    "data": "Email",
+                    "visible": false
+                }
+                 ]
+            } );
+
+
+
+         $('#example tbody').on('click', 'td.details-control', function () {
+             var tr = $(this).closest('tr');
+             var tdi = tr.find("i.fa");
+             var row = table.row(tr);
+             var rowdata = (table.row(tr).data());
+
+             if (row.child.isShown()) {
+                 <!--This row is already open - close it-->
+                 row.child.hide();
+                 tr.removeClass('shown');
+                 tdi.first().removeClass('fa-minus-square');
+                 tdi.first().addClass('fa-plus-square');
+             }
+             else {
+                 <!--Open this row-->
+                 row.child(format(rowdata)).show();
+                 tr.addClass('shown');
+                 tdi.first().removeClass('fa-plus-square');
+                 tdi.first().addClass('fa-minus-square');
+             }
+         });
+
+         table.on("user-select", function (e, dt, type, cell, originalEvent) {
+             if ($(cell.node()).hasClass("details-control")) {
+                 e.preventDefault();
+             }
+         });
+     });
+
+
+</script>
+
+
+</body>
+</html>
